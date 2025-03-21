@@ -17,6 +17,7 @@ This project demonstrates a modular approach to AI agent orchestration, where a 
   - **Image Agent**: Analyzes images and provides detailed descriptions
   - **Geolocation Agent**: Identifies locations from images
   - **Video Agent**: Analyzes video content
+  - **Automation Agent**: Performs browser automation for complex web-based tasks
 - **Team Collaboration**: Combines insights from multiple agents for comprehensive responses
 - **Streaming Responses**: Provides real-time streaming of agent responses
 
@@ -41,8 +42,8 @@ The system follows a modular architecture with these key components:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/SAiRAS.git
-   cd SAiRAS
+   git clone https://github.com/ZekRock18/SAIRAS-AI.git
+   cd SAIRAS-AI
    ```
 
 2. Install dependencies:
@@ -97,6 +98,19 @@ The Query Decomposer uses chain-of-thought reasoning to analyze user queries and
 ### Team Coordination
 
 The Team Agent coordinates the work of multiple specialized agents, breaking down complex tasks into subtasks and assigning them to appropriate agents. It then integrates their responses into a cohesive answer.
+
+### Automation Agent
+
+The Automation Agent is a powerful component that enables browser automation for complex web-based tasks. It leverages:
+
+- **Google's Gemini Model**: Uses the advanced gemini-2.0-flash-exp model for intelligent browser interaction
+- **Browser Automation**: Utilizes the browser_use framework to navigate websites, fill forms, and extract information
+- **Asynchronous Processing**: Implements asyncio for efficient task handling
+- **Configurable Parameters**: Supports customizable viewport settings and action limits
+
+This agent can be used independently or as part of the orchestrated system to handle tasks requiring web interaction, such as data collection, form submission, or complex web-based workflows.
+
+For more detailed information about the Automation Agent, see [Automation Agent Documentation](docs/automation_agent_details.md).
 
 ## 📊 Future Enhancements
 
