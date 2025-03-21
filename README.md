@@ -34,7 +34,7 @@ The system follows a modular architecture with these key components:
 
 ### Prerequisites
 
-- Python 3.10 or higher
+- Python 3.11 or higher
 - Groq API key (for LLM access)
 - Google API key (for Gemini model access)
 
@@ -109,8 +109,6 @@ The Automation Agent is a powerful component that enables browser automation for
 - **Configurable Parameters**: Supports customizable viewport settings and action limits
 
 This agent can be used independently or as part of the orchestrated system to handle tasks requiring web interaction, such as data collection, form submission, or complex web-based workflows.
-
-For more detailed information about the Automation Agent, see [Automation Agent Documentation](docs/automation_agent_details.md).
 
 ## 📊 Future Enhancements
 
