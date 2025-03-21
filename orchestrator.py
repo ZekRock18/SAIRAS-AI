@@ -76,32 +76,6 @@ def process_with_image_agent(image_url, query, is_geolocation=False):
     else:
         return "Could not process image analysis result"
 
-def process_with_video_agent(video_url, query):
-    """
-    Process a video query separately using the video agent.
-    
-    Args:
-        video_url (str): URL of the video to analyze
-        query (str): Query about the video
-        
-    Returns:
-        str: The video analysis result
-    """
-    print(f"Processing video: {video_url}")
-    
-    video_result = analyze_video(video_url=video_url, query=query)
-    
-    # Extract the content from the response
-    if hasattr(video_result, 'content'):
-        return video_result.content
-    elif hasattr(video_result, 'to_json'):
-        data = json.loads(video_result.to_json())
-        return data.get("content", "No video analysis available")
-    elif hasattr(video_result, 'get_content_as_string'):
-        return video_result.get_content_as_string()
-    else:
-        return "Could not process video analysis result"
-
 def get_agent_team(decomposition_result):
     """
     Creates a team agent that aggregates the responses from the selected specialized agents.
@@ -144,7 +118,6 @@ def main():
     print("Special commands:")
     print("@image:{image_url} your prompt - For general image analysis")
     print("@geolocation:{image_url} - For identifying locations from images")
-    print("@video:{video_url} your prompt - For video analysis")
     print("-----------------------------------------")
     
     try:
@@ -156,23 +129,19 @@ def main():
             decomposition_result = decompose(query)
             print("Decomposition result:", decomposition_result["tasks"])
             
-            # Get media URL and clean query
-            media_url = decomposition_result.get("media_url")
-            media_type = decomposition_result.get("media_type")
+            # Handle image processing
+            image_url = decomposition_result.get("image_url")
             clean_query = decomposition_result.get("clean_query", query)
             
-            # Check for different task types
             is_geolocation = "geolocation" in decomposition_result["tasks"]
             has_image_task = "image" in decomposition_result["tasks"] or is_geolocation
-            has_video_task = "video" in decomposition_result["tasks"]
             
-            # Handle image processing
-            if has_image_task and media_url and media_type in ["image", "geolocation"]:
+            if has_image_task and image_url:
                 task_type = "geolocation" if is_geolocation else "image"
-                print(f"{task_type.capitalize()} task detected with image: {media_url}")
+                print(f"{task_type.capitalize()} task detected with image: {image_url}")
                 
                 # First, process the image separately
-                media_analysis = process_with_image_agent(media_url, clean_query, is_geolocation)
+                image_analysis = process_with_image_agent(image_url, clean_query, is_geolocation)
                 
                 # Then, if there are other agent types, process them separately
                 other_tasks = [t for t in decomposition_result["tasks"] if t != "image" and t != "geolocation"]
@@ -189,7 +158,7 @@ def main():
                     # Add context from image analysis for other agents
                     enhanced_query = f"""
 Based on {task_type} analysis which shows: 
-{media_analysis[:300]}... 
+{image_analysis[:300]}... 
 
 Please address the following query:
 {clean_query}
@@ -200,44 +169,9 @@ Please address the following query:
                 else:
                     # Only image analysis is needed
                     print(f"\n{task_type.capitalize()} Analysis Result:")
-                    print(media_analysis)
-            
-            # Handle video processing
-            elif has_video_task and media_url and media_type == "video":
-                print(f"Video task detected with video: {media_url}")
-                
-                # First, process the video separately
-                media_analysis = process_with_video_agent(media_url, clean_query)
-                
-                # Then, if there are other agent types, process them separately
-                other_tasks = [t for t in decomposition_result["tasks"] if t != "video"]
-                
-                if other_tasks:
-                    # Create a modified decomposition result without video task
-                    modified_result = {
-                        "tasks": other_tasks,
-                        "clean_query": clean_query
-                    }
-                    
-                    team_agent = get_agent_team(modified_result)
-                    
-                    # Add context from video analysis for other agents
-                    enhanced_query = f"""
-Based on video analysis which shows: 
-{media_analysis[:300]}... 
-
-Please address the following query:
-{clean_query}
-"""
-                    
-                    print("\nProcessing with team agent...")
-                    team_agent.print_response(enhanced_query, stream=True)
-                else:
-                    # Only video analysis is needed
-                    print("\nVideo Analysis Result:")
-                    print(media_analysis)
+                    print(image_analysis)
             else:
-                # Regular query without media
+                # Regular query without image
                 team_agent = get_agent_team(decomposition_result)
                 team_agent.print_response(clean_query, stream=True)
                 
