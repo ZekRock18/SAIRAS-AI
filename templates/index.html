@@ -1,38 +1,343 @@
-{% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
-
-{% block header_title %}Welcome to SAiRAS{% endblock %}
-
-{% block content %}
-<div class="flex flex-col items-center justify-center h-full text-center">
-    <h1 class="text-4xl font-bold mb-6">SAiRAS</h1>
-    <p class="text-xl mb-8">Smart AI Responsive Agent System</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAIRAS - AI-Agents Powered Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #8b5cf6, #d946ef);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .feature-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.1);
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+        @keyframes blob {
+            0% { transform: scale(1); }
+            33% { transform: scale(1.1); }
+            66% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .hero-image {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Blobs -->
+    <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+    <div class="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-        <a href="/agentic-ai" class="bg-dark bg-opacity-50 hover:bg-opacity-70 p-6 rounded-lg transition-all transform hover:scale-105">
-            <div class="flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-accent" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                </svg>
-                <h3 class="text-xl font-semibold mb-2">Agentic AI</h3>
-                <p class="text-gray-400">Interact with our specialized AI agents for text, image, and video analysis</p>
-            </div>
+    <!-- Navigation -->
+    <nav class="relative z-10 px-4 py-4 flex justify-between items-center">
+        <a class="text-3xl font-bold leading-none" href="#">
+            <span class="text-white font-bold">SAiRAS</span>
         </a>
-        
-        <a href="/web-automation" class="bg-dark bg-opacity-50 hover:bg-opacity-70 p-6 rounded-lg transition-all transform hover:scale-105">
-            <div class="flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-accent" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
+        <div class="lg:hidden">
+            <button class="navbar-burger flex items-center text-white p-3">
+                <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
                 </svg>
-                <h3 class="text-xl font-semibold mb-2">Web Automation</h3>
-                <p class="text-gray-400">Automate complex web-based tasks with our intelligent browser agent</p>
+            </button>
+        </div>
+        <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
+            <li><a class="text-sm text-white hover:text-purple-300" href="#">Home</a></li>
+            <li class="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                </svg>
+            </li>
+            <li><a class="text-sm text-white hover:text-purple-300" href="#features">Features</a></li>
+            <li class="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                </svg>
+            </li>
+            <li><a class="text-sm text-white hover:text-purple-300" href="#">About Us</a></li>
+        </ul>
+        <div class="hidden lg:inline-block">
+            <a class="inline-block py-2 px-6 mr-2 text-sm text-white font-medium hover:text-purple-300 transition duration-200" href="/login">Log In</a>
+            <a class="inline-block py-2 px-6 text-sm text-white font-medium bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition duration-200 hover:shadow-lg hover:-translate-y-1" href="/register">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="navbar-menu relative z-50 hidden">
+        <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+        <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-slate-800 border-r overflow-y-auto">
+            <div class="flex items-center mb-8">
+                <a class="mr-auto text-3xl font-bold leading-none" href="#">
+                    <span class="text-white font-bold">SAiRAS</span>
+                </a>
+                <button class="navbar-close">
+                    <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
-        </a>
+            <div>
+                <ul>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-100 hover:bg-slate-700 hover:text-purple-300 rounded" href="#">Home</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-100 hover:bg-slate-700 hover:text-purple-300 rounded" href="#features">Features</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-100 hover:bg-slate-700 hover:text-purple-300 rounded" href="#">About Us</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-auto">
+                <div class="pt-6">
+                    <a class="block px-4 py-3 mb-3 text-center text-white font-semibold bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg" href="/register">Sign Up</a>
+                    <a class="block px-4 py-3 mb-2 text-center text-white border border-gray-600 rounded-lg hover:bg-slate-700" href="/login">Log In</a>
+                </div>
+            </div>
+        </nav>
     </div>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 px-4 py-12 sm:px-6 lg:px-8 lg:py-16 flex flex-col-reverse lg:flex-row items-center">
+        <div class="lg:w-1/2 lg:pr-12" data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                <span class="gradient-text">SAIRAS:</span> AI-Agents powered ecosystem. No Code. Infinite Possibilities.
+            </h1>
+            <p class="text-lg text-gray-300 mb-8">
+                Innovating with the latest AI agent trends, we've developed an application that automates processes.
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/register" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg text-center">
+                    Get Started
+                </a>
+                <a href="#features" class="bg-transparent border border-purple-500 text-white font-semibold py-3 px-8 rounded-lg text-center hover:bg-purple-500 hover:bg-opacity-10 transition duration-300">
+                    Learn More
+                </a>
+            </div>
+        </div>
+        <div class="lg:w-1/2 mb-10 lg:mb-0" data-aos="fade-left" data-aos-duration="1000">
+            <div class="hero-image relative">
+                <svg class="w-full max-w-lg mx-auto" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#gradient)" d="M47.7,-57.2C59.9,-45.8,67.2,-29.2,70.5,-11.7C73.9,5.9,73.4,24.4,64.3,37.1C55.2,49.8,37.4,56.7,19.2,63.5C1,70.2,-17.6,76.7,-33.6,71.5C-49.5,66.2,-62.9,49.1,-68.1,30.9C-73.3,12.7,-70.4,-6.7,-63.3,-23.5C-56.2,-40.3,-45,-54.5,-31.4,-65.2C-17.8,-75.9,-1.8,-83.1,12.9,-79.9C27.7,-76.7,35.5,-68.6,47.7,-57.2Z" transform="translate(100 100)" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-3/4 h-3/4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 16V8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16Z" stroke="white" stroke-width="1.5"/>
+                        <path d="M17.5 6.51L17.51 6.49889" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="gradient-text">Key</span> Features
+                </h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Our platform offers a comprehensive suite of AI-powered tools designed to streamline your workflow and enhance productivity.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mb-4 text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Specialized AI Agents<br/>(Data-Driven Browsing Agents)</h3>
+                    <p class="text-gray-400">
+                        Our intelligent agents are designed to handle specific tasks autonomously, from data analysis to content generation, all tailored to your unique requirements.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-4 text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">AI Ecosystem</h3>
+                    <p class="text-gray-400">
+                        A comprehensive environment where multiple AI agents collaborate seamlessly, creating a powerful network that adapts to your business needs and evolves with your requirements.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="mb-4 text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">No-Code Application Development</h3>
+                    <p class="text-gray-400">
+                        Build sophisticated applications without writing a single line of code. Our intuitive interface allows you to create powerful solutions through simple drag-and-drop functionality.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="400">
+                    <div class="mb-4 text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Scalable User and Enterprise Plans</h3>
+                    <p class="text-gray-400">
+                        Flexible subscription options designed to grow with your business. From individual users to large enterprises, we offer tailored plans to meet your specific needs and budget.
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="500">
+                    <div class="mb-4 text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Pre-built AI Agenting Framework</h3>
+                    <p class="text-gray-400">
+                        Leverage our ready-to-use AI framework to quickly implement intelligent agents in your applications, saving development time and resources while ensuring robust performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
     
-    <div class="mt-12 text-gray-400">
-        <p>Powered by advanced AI models and orchestration</p>
-    </div>
-</div>
-{% endblock %}
+    <!-- Call to Action -->
+    <section class="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up" data-aos-duration="1000">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+                Ready to transform your workflow with <span class="gradient-text">AI-powered agents</span>?
+            </h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Join thousands of businesses that have already revolutionized their operations with our cutting-edge AI ecosystem.
+            </p>
+            <a href="/register" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg text-center inline-block">
+                Get Started Today
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="relative z-10 py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a class="text-2xl font-bold" href="#">
+                        <span class="text-white">SAiRAS</span>
+                    </a>
+                    <p class="text-gray-400 mt-2">AI-Agents powered ecosystem</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-800 pt-8 md:flex md:items-center md:justify-between">
+                <div class="flex space-x-6 md:order-2">
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition duration-300">Contact Us</a>
+                </div>
+                <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">&copy; 2023 SAIRAS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Burger menu toggle
+            const burger = document.querySelector('.navbar-burger');
+            const menu = document.querySelector('.navbar-menu');
+            const close = document.querySelector('.navbar-close');
+            
+            burger.addEventListener('click', function() {
+                menu.classList.toggle('hidden');
+            });
+            
+            close.addEventListener('click', function() {
+                menu.classList.add('hidden');
+            });
+            
+            // Initialize AOS animations
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
