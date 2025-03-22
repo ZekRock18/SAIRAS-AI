@@ -1,12 +1,12 @@
 # SAiRAS - Smart AI Responsive Agent System
 
 [![Hackathon Project](https://img.shields.io/badge/Hackathon-Project-brightgreen)](https://github.com/ZekRock18/SAiRAS)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ## 🚀 Overview
 
-SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform developed for a hackathon by [ZekRock18](https://github.com/ZekRock18). The system intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
+SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform developed for a hackathon by team Code Catalyst. The system intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
 
 This project demonstrates a modular approach to AI agent orchestration, where a central system decomposes queries and delegates tasks to specialized agents, then synthesizes their responses into a cohesive answer.
 
