@@ -6,7 +6,7 @@
 
 ## 🚀 Overview
 
-SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform developed for a hackathon by team Code Catalyst. The system intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
+SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform developed for code-e-manipal hackathon by team Code Catalyst. The system intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
 
 This project demonstrates a modular approach to AI agent orchestration, where a central system decomposes queries and delegates tasks to specialized agents, then synthesizes their responses into a cohesive answer.
 
@@ -99,7 +99,7 @@ Then navigate to `http://localhost:5000` in your browser to access the user-frie
 
 ## 🏆 Hackathon Project
 
-This project was developed by [ZekRock18](https://github.com/ZekRock18) for a hackathon, showcasing the potential of modular AI agent systems to handle complex, multi-modal queries.
+This project was developed by Team Code Catalyst for code-e-manipal hackathon, showcasing the potential of modular AI agent systems to handle complex, multi-modal queries.
 
 ### Challenges Overcome
 
@@ -138,8 +138,6 @@ The Automation Agent is a powerful component that enables browser automation for
 - **Configurable Parameters**: Supports customizable viewport settings and action limits
 
 This agent can be used independently or as part of the orchestrated system to handle tasks requiring web interaction, such as data collection, form submission, or complex web-based workflows.
-
-For more detailed information about the Automation Agent, see [Automation Agent Documentation](docs/automation_agent_details.md).
 
 ## 📊 Future Enhancements
 
