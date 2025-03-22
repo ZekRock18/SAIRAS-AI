@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAiRAS - {% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4338ca',  /* Indigo-700 */
+                        secondary: '#7e22ce', /* Purple-700 */
+                        accent: '#ec4899',   /* Pink-500 */
+                        dark: '#1e1b4b',     /* Indigo-950 */
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-primary {
+                background: linear-gradient(to right, #4338ca, #7e22ce);
+            }
+            .bg-gradient-secondary {
+                background: radial-gradient(circle, rgba(126,34,206,0.7) 0%, rgba(0,0,0,0) 70%);
+            }
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-black text-white min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gradient-primary">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold mb-8">SAiRAS</h1>
+                <nav>
+                    <a href="/dashboard" class="block py-2 px-4 rounded hover:bg-indigo-800 mb-2 {% if request.path == '/dashboard' %}bg-indigo-800{% endif %}">
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                            Dashboard
+                        </span>
+                    </a>
+                    <a href="/agentic-ai" class="block py-2 px-4 rounded hover:bg-indigo-800 mb-2 {% if request.path == '/agentic-ai' %}bg-indigo-800{% endif %}">
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                            </svg>
+                            Agentic AI
+                        </span>
+                    </a>
+                    <a href="/web-automation" class="block py-2 px-4 rounded hover:bg-indigo-800 mb-2 {% if request.path == '/web-automation' %}bg-indigo-800{% endif %}">
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
+                            </svg>
+                            Web Automation
+                        </span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-gradient-primary py-4 px-6 flex justify-between items-center">
+                <h2 class="text-xl font-semibold">{% block header_title %}{% endblock %}</h2>
+                <div class="flex items-center">
+                    <div class="bg-accent rounded-full px-4 py-1 flex items-center">
+                        <span>username@123</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <main class="flex-1 overflow-y-auto p-6 relative">
+                <div class="absolute inset-0 bg-gradient-secondary pointer-events-none"></div>
+                <div class="relative z-10">
+                    {% block content %}{% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

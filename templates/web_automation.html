@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Web Automation{% endblock %}
+
+{% block header_title %}Web Automation{% endblock %}
+
+{% block head %}
+<style>
+    .task-history {
+        background-color: rgba(30, 27, 75, 0.7);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .task-status {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .status-running {
+        background-color: #4338ca;
+    }
+    .status-completed {
+        background-color: #10b981;
+    }
+    .status-error {
+        background-color: #ef4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full">
+    <!-- Task Form -->
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2">Web Automation Task</h3>
+        <p class="text-sm text-gray-400 mb-4">Describe what you want the automation agent to do on the web</p>
+        
+        <form id="automation-form" class="relative">
+            <textarea id="task-input" rows="3" placeholder="Enter your automation task here..." class="w-full bg-dark bg-opacity-50 text-white rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-accent resize-none"></textarea>
+            <button type="submit" class="mt-2 bg-accent hover:bg-opacity-80 text-white rounded-lg px-4 py-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clip-rule="evenodd" />
+                </svg>
+                Run Automation
+            </button>
+        </form>
+    </div>
+    
+    <!-- Task History -->
+    <div>
+        <h3 class="text-lg font-semibold mb-2">Task History</h3>
+        <div id="task-history-container" class="space-y-4">
+            <!-- Task history items will be added here dynamically -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const automationForm = document.getElementById('automation-form');
+        const taskInput = document.getElementById('task-input');
+        const taskHistoryContainer = document.getElementById('task-history-container');
+        
+        // Function to add a task to the history
+        function addTaskToHistory(task, status = 'running') {
+            const taskId = 'task-' + Date.now();
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task-history';
+            taskDiv.id = taskId;
+            
+            let statusClass = 'status-running';
+            let statusText = 'Running';
+            
+            if (status === 'completed') {
+                statusClass = 'status-completed';
+                statusText = 'Completed';
+            } else if (status === 'error') {
+                statusClass = 'status-error';
+                statusText = 'Error';
+            }
+            
+            taskDiv.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-medium">Automation Task</h4>
+                    <span class="task-status ${statusClass}">${statusText}</span>
+                </div>
+                <p class="text-sm mb-2">${task}</p>
+                <div class="task-output text-xs text-gray-400 mt-2">
+                    <p>Task started at ${new Date().toLocaleTimeString()}</p>
+                </div>
+            `;
+            
+            taskHistoryContainer.prepend(taskDiv);
+            return taskId;
+        }
+        
+        // Function to update task status
+        function updateTaskStatus(taskId, status, message = '') {
+            const taskDiv = document.getElementById(taskId);
+            if (!taskDiv) return;
+            
+            const statusSpan = taskDiv.querySelector('.task-status');
+            const outputDiv = taskDiv.querySelector('.task-output');
+            
+            let statusClass = 'status-running';
+            let statusText = 'Running';
+            
+            if (status === 'completed') {
+                statusClass = 'status-completed';
+                statusText = 'Completed';
+            } else if (status === 'error') {
+                statusClass = 'status-error';
+                statusText = 'Error';
+            }
+            
+            statusSpan.className = `task-status ${statusClass}`;
+            statusSpan.textContent = statusText;
+            
+            if (message) {
+                outputDiv.innerHTML += `<p>${message}</p>`;
+            }
+        }
+        
+        // Handle form submission
+        automationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const task = taskInput.value.trim();
+            
+            if (!task) return;
+            
+            // Add task to history
+            const taskId = addTaskToHistory(task);
+            
+            // Clear input
+            taskInput.value = '';
+            
+            // Send task to backend
+            fetch('/api/automation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ task: task }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                updateTaskStatus(taskId, 'completed', 'Automation task started successfully. The agent is now working on your task in the background.');
+            })
+            .catch(error => {
+                updateTaskStatus(taskId, 'error', `Error: ${error.message}`);
+                console.error('Automation error:', error);
+            });
+        });
+    });
+</script>
+{% endblock %}

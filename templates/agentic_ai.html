@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Agentic AI{% endblock %}
+
+{% block header_title %}Agentic AI{% endblock %}
+
+{% block head %}
+<style>
+    .chat-message {
+        margin-bottom: 1rem;
+        max-width: 80%;
+    }
+    .user-message {
+        background-color: rgba(67, 56, 202, 0.7);
+        border-radius: 1rem 1rem 0.25rem 1rem;
+        margin-left: auto;
+        padding: 1rem;
+    }
+    .ai-message {
+        background-color: rgba(30, 27, 75, 0.7);
+        border-radius: 1rem 1rem 1rem 0.25rem;
+        margin-right: auto;
+        padding: 1rem;
+    }
+    .typing-indicator {
+        display: inline-block;
+    }
+    .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #ec4899;
+        border-radius: 50%;
+        margin: 0 2px;
+        animation: bounce 1.5s infinite ease-in-out;
+    }
+    .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full">
+    <!-- Chat Messages Container -->
+    <div id="chat-container" class="flex-1 overflow-y-auto mb-4 space-y-4">
+        <div class="chat-message ai-message">
+            <p>Hello! I'm SAiRAS, your Smart AI Responsive Agent System. I can help with general knowledge, financial analysis, research questions, image analysis, geolocation, and video analysis. How can I assist you today?</p>
+        </div>
+    </div>
+    
+    <!-- Input Area -->
+    <div class="mt-auto">
+        <form id="query-form" class="relative">
+            <input type="text" id="query-input" placeholder="Ask Anything..." class="w-full bg-dark bg-opacity-50 text-white rounded-full py-4 px-6 focus:outline-none focus:ring-2 focus:ring-accent">
+            <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-accent hover:bg-opacity-80 text-white rounded-full p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
+        </form>
+        <div class="text-xs text-gray-400 mt-2 px-4">
+            <p>Special commands: <span class="text-accent">@image:{image_url}</span> for image analysis, <span class="text-accent">@geolocation:{image_url}</span> for location identification, <span class="text-accent">@video:{video_url}</span> for video analysis</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatContainer = document.getElementById('chat-container');
+        const queryForm = document.getElementById('query-form');
+        const queryInput = document.getElementById('query-input');
+        
+        // Function to add a message to the chat
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'ai-message'}`;
+            messageDiv.innerHTML = `<p>${content}</p>`;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Function to add a typing indicator
+        function addTypingIndicator() {
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'chat-message ai-message typing-indicator-container';
+            indicatorDiv.id = 'typing-indicator';
+            indicatorDiv.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            chatContainer.appendChild(indicatorDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Function to remove typing indicator
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+        
+        // Handle form submission
+        queryForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = queryInput.value.trim();
+            
+            if (!query) return;
+            
+            // Add user message to chat
+            addMessage(query, true);
+            
+            // Clear input
+            queryInput.value = '';
+            
+            // Add typing indicator
+            addTypingIndicator();
+            
+            // Send query to backend
+            fetch('/api/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Handle image analysis if present
+                if (data.image_analysis) {
+                    addMessage(`<strong>Image Analysis:</strong><br>${data.image_analysis}`);
+                }
+                
+                // Handle agent response
+                if (data.agent_response) {
+                    // Convert markdown to HTML (simple version)
+                    let htmlResponse = data.agent_response
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                        .replace(/\n\n/g, '<br><br>')
+                        .replace(/\n/g, '<br>');
+                    
+                    addMessage(htmlResponse);
+                }
+            })
+            .catch(error => {
+                removeTypingIndicator();
+                addMessage(`<strong>Error:</strong> ${error.message}`, false);
+            });
+        });
+    });
+</script>
+{% endblock %}

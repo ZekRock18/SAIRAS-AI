@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full">
+    <!-- Dashboard Overview -->
+    <div class="mb-8">
+        <h3 class="text-2xl font-semibold mb-4">System Overview</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Agent Stats Card -->
+            <div class="bg-dark bg-opacity-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
+                    <h4 class="text-xl font-medium">Specialized Agents</h4>
+                </div>
+                <div class="text-3xl font-bold mb-2">7</div>
+                <p class="text-sm text-gray-400">Web Search, Financial, Research, Image, Geolocation, Video, Automation</p>
+            </div>
+            
+            <!-- Query Stats Card -->
+            <div class="bg-dark bg-opacity-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                    </svg>
+                    <h4 class="text-xl font-medium">Queries Processed</h4>
+                </div>
+                <div class="text-3xl font-bold mb-2">0</div>
+                <p class="text-sm text-gray-400">Total queries processed by the system</p>
+            </div>
+            
+            <!-- Automation Stats Card -->
+            <div class="bg-dark bg-opacity-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
+                    </svg>
+                    <h4 class="text-xl font-medium">Automations Run</h4>
+                </div>
+                <div class="text-3xl font-bold mb-2">0</div>
+                <p class="text-sm text-gray-400">Total automation tasks executed</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Features Overview -->
+    <div>
+        <h3 class="text-2xl font-semibold mb-4">Available Features</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Agentic AI Feature -->
+            <div class="bg-dark bg-opacity-50 p-6 rounded-lg flex">
+                <div class="mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-xl font-medium mb-2">Agentic AI</h4>
+                    <p class="text-sm text-gray-400 mb-4">Interact with our specialized AI agents for text, image, and video analysis</p>
+                    <a href="/agentic-ai" class="inline-block bg-accent hover:bg-opacity-80 text-white rounded-lg px-4 py-2 text-sm">Go to Agentic AI</a>
+                </div>
+            </div>
+            
+            <!-- Web Automation Feature -->
+            <div class="bg-dark bg-opacity-50 p-6 rounded-lg flex">
+                <div class="mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-accent" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="text-xl font-medium mb-2">Web Automation</h4>
+                    <p class="text-sm text-gray-400 mb-4">Automate complex web-based tasks with our intelligent browser agent</p>
+                    <a href="/web-automation" class="inline-block bg-accent hover:bg-opacity-80 text-white rounded-lg px-4 py-2 text-sm">Go to Web Automation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
