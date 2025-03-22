@@ -1,8 +1,12 @@
-# SAiRAS
+# SAiRAS - Smart AI Responsive Agent System
+
+[![Hackathon Project](https://img.shields.io/badge/Hackathon-Project-brightgreen)](https://github.com/ZekRock18/SAiRAS)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ## 🚀 Overview
 
-SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform that intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
+SAiRAS (Smart AI Responsive Agent System) is an advanced AI orchestration platform developed for a hackathon by [ZekRock18](https://github.com/ZekRock18). The system intelligently routes user queries to specialized AI agents based on the query type. The system can handle text, images, and video inputs, providing comprehensive responses by leveraging the strengths of different AI models and tools.
 
 This project demonstrates a modular approach to AI agent orchestration, where a central system decomposes queries and delegates tasks to specialized agents, then synthesizes their responses into a cohesive answer.
 
@@ -20,6 +24,7 @@ This project demonstrates a modular approach to AI agent orchestration, where a 
   - **Automation Agent**: Performs browser automation for complex web-based tasks
 - **Team Collaboration**: Combines insights from multiple agents for comprehensive responses
 - **Streaming Responses**: Provides real-time streaming of agent responses
+- **Web Interface**: User-friendly Flask web application with login functionality
 
 ## 🏗️ Architecture
 
@@ -34,7 +39,7 @@ The system follows a modular architecture with these key components:
 
 ### Prerequisites
 
-- Python 3.10 or higher
+- Python 3.11 or higher
 - Groq API key (for LLM access)
 - Google API key (for Gemini model access)
 
@@ -42,8 +47,8 @@ The system follows a modular architecture with these key components:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ZekRock18/SAIRAS-AI.git
-   cd SAIRAS-AI
+   git clone https://github.com/ZekRock18/SAiRAS.git
+   cd SAiRAS
    ```
 
 2. Install dependencies:
@@ -58,6 +63,8 @@ The system follows a modular architecture with these key components:
    ```
 
 ## 🚀 Usage
+
+### Command Line Interface
 
 Run the orchestrator to start the system:
 
@@ -79,6 +86,28 @@ python orchestrator.py
 - `@image:{image_url} your prompt` - For general image analysis
 - `@geolocation:{image_url}` - For identifying locations from images
 - `@video:{video_url} your prompt` - For video analysis
+
+### Web Interface
+
+Start the Flask web application:
+
+```bash
+python app.py
+```
+
+Then navigate to `http://localhost:5000` in your browser to access the user-friendly interface with login functionality.
+
+## 🏆 Hackathon Project
+
+This project was developed by [ZekRock18](https://github.com/ZekRock18) for a hackathon, showcasing the potential of modular AI agent systems to handle complex, multi-modal queries.
+
+### Challenges Overcome
+
+- Integrating multiple AI models with different capabilities and requirements
+- Developing an effective query decomposition system
+- Creating a seamless orchestration mechanism for agent collaboration
+- Handling multi-modal inputs (text, images, video) in a unified system
+- Building a responsive web interface for easy interaction
 
 ## 🧠 Technical Implementation
 
